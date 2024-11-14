@@ -1,0 +1,6 @@
+
+setback_multiplier: 1.1
+setback_shape: "circle" #"circle" #"circle" or "square"
+row_spacing: 5 #D
+column_spacing: 5 #D
+layout_shape: "square"

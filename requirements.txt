@@ -1,0 +1,20 @@
+matplotlib
+numpy
+pandas>=2.0.3
+plotly
+geopy
+python-dotenv
+rainflow
+scikit-learn
+scipy
+shapely
+timezonefinder
+setuptools
+pyyaml
+pathlib
+h5pyd #for getting resource data
+# h5py
+openpyxl
+# mpi4py #for HPC runs
+NREL-rex
+packaging
