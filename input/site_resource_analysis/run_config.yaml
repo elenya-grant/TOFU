@@ -1,0 +1,18 @@
+gid_run:
+  output_folder: "/projects/iedo00onsite/data/site_resource_summaries"
+  final_gid_sitelist: "site_gids.pkl"
+  unique_gid_list: "unique_gid_list.pkl"
+sitelist:
+  directory: "/projects/iedo00onsite/data/pnnl_parcel_land_coverage_data/updated_9_27_2024"
+  filename: "LC_facility_parcels_NREL_9_27.csv"
+resource_runs:
+  unique_gid_filename:
+resource_data:
+  resource_year: 2012
+  wtk:
+    version: "v1.0.0"
+    region: "conus"
+    hub_height: 110
+  nsrdb:
+    version: "current"
+    region: "conus"
