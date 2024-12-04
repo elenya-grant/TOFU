@@ -4,6 +4,8 @@ from pathlib import Path
 import pandas as pd
 import geopandas as gpd
 import h5pyd
+import dill
+
 
 class Loader(yaml.SafeLoader):
 
@@ -37,7 +39,7 @@ def write_yaml(filename,data):
 
 def check_create_folder(filepath):
     if not os.path.isdir(filepath):
-        os.makedirs(filepath)
+        os.makedirs(filepath,exist_ok=True)
         already_exists = False
     else:
         already_exists = True
@@ -106,3 +108,12 @@ def find_data_shapefile(files):
     if len(data_file)==0:
         data_file = [file for file in files if file.split(".")[-1]=="csv"]
     return data_file[0]
+
+def dump_pickle(filename,data):
+    with open(filename,"wb") as f:
+        dill.dump(data,f)
+
+def load_pickle(filename):
+    with open(filename,"rb") as f:
+        data = dill.load(f)
+    return data
