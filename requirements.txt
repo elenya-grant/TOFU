@@ -1,5 +1,6 @@
 matplotlib
-numpy
+# numpy=1.26.4
+numpy==1.26.4
 pandas>=2.0.3
 plotly
 geopy
@@ -12,6 +13,7 @@ timezonefinder
 setuptools
 pyyaml
 pathlib
+dill
 h5pyd #for getting resource data
 # h5py
 openpyxl

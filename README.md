@@ -7,10 +7,10 @@ Step 1. create a fork and clone that or clone this repo
     git clone https://github.com/elenya-grant/TOFU.git
     cd TOFU
     ```
-    
+
 Step 2. create environment
     ```
-    conda create -n tofu
+    conda create --name tofu python=3.9 -y
     conda activate tofu
     ```
 

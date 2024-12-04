@@ -19,9 +19,9 @@ base_path = Path("tofu")
 #     *ROOT.glob("./data/tl_2023_us_state/*")
 # ]
 
-# package_data = {
-#     "tofu": [str(file.relative_to(base_path)) for file in package_data_files],
-# }
+package_data = {
+    "tofu": [],
+}
 
 setup(
     name=NAME,
