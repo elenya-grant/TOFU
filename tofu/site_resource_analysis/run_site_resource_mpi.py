@@ -16,6 +16,7 @@ from tofu.utilities.file_utilities import load_yaml, load_pickle
 from tofu.utilities.tofu_loggers import tofu_logger as tofu_log
 from tofu.site_resource_analysis.wind_resource import WindResource
 from tofu.site_resource_analysis.solar_resource import SolarResource
+import numpy as np
 
 def get_site_wind_resource(wtk_gid,output_filename_base,resource_year,hub_height):
     tofu_log.info(f"Running wind resource gid(s): {wtk_gid}")
@@ -126,23 +127,24 @@ if __name__ == "__main__":
     input_config = load_yaml(input_filepath)
     
     result_folder = input_config["gid_run"]["output_folder"]
-    unq_gid_filepath = os.path.join(result_folder,input_config["gid_run"]["unq_gid_filename"])
+    unq_gid_filepath = os.path.join(result_folder,input_config["gid_run"]["unique_gid_list"])
     gid_list = load_pickle(unq_gid_filepath)
     check_create_folder(result_folder)
     year = input_config["resource_data"]["resource_year"]
 
-    
     # conus_sites = get_conus_sitelist(data_folder=input_config["sitelist"]["directory"],sitelist_data_filename=input_config["sitelist"]["filename"])
     # ---- RUN WIND ---
     if run_wind:
         output_filepath_base_desc_wind = os.path.join(result_folder,"wind_site_resource--")
         hub_ht = input_config["resource_data"]["wtk"]["hub_height"]
         wind_inpt = [output_filepath_base_desc_wind,year,"wind",hub_ht]
-        wind_gid_list = gid_list["WTK gids"]
+        wind_gid_list = np.delete(gid_list["WTK gids"],np.argwhere(np.isnan(gid_list["WTK gids"])).flatten())
+        wind_gid_list = wind_gid_list.astype(int)
         main(wind_gid_list,wind_inpt)
     # ---- RUN SOLAR ---
     if run_solar:
         output_filepath_base_desc_pv = os.path.join(result_folder,"solar_site_resource--")
         solar_inpt = [output_filepath_base_desc_pv,year,"solar",None]
-        solar_gid_list = gid_list["NSRDB gids"]
+        solar_gid_list = np.delete(gid_list["NSRDB gids"],np.argwhere(np.isnan(gid_list["NSRDB gids"])).flatten())
+        solar_gid_list = solar_gid_list.astype(int)
         main(solar_gid_list,solar_inpt)
