@@ -174,10 +174,14 @@ class WindResource:
                                                        self.wind_dict['pressure_{h}m_arr'.format(h=self.data_hub_heights[0])],
                                                        self.wind_dict['windspeed_{h}m_arr'.format(h=self.data_hub_heights[0])],
                                                        self.wind_dict['winddirection_{h}m_arr'.format(h=self.data_hub_heights[0])])]
-    def summarize_annual_resource(self):
-        keys = ["site latitude","site longitude","resource year"]
-        vals = [self.latitude,self.longitude,self.year]
-
+    def summarize_annual_resource(self,return_site_lat_lon = True):
+        if return_site_lat_lon:
+            keys = ["site latitude","site longitude","resource year"]
+            vals = [self.latitude,self.longitude,self.year]
+        else:
+            keys = ["resource year"]
+            vals = [self.year]
+            
         keys += ["site_gid","hub_height","wtk latitude","wtk longitude"]
         vals += [self.site_gid,self.hub_height,self.wtk_latitude,self.wtk_longitude]
         

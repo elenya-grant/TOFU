@@ -150,9 +150,13 @@ class SolarResource:
         self.pres_arr = list(self.pres_arr.astype(float, copy=False))
         self.tdew_arr = list(self.tdew_arr.astype(float, copy=False))
 
-    def summarize_annual_resource(self):
-        keys = ["site latitude","site longitude","resource year"]
-        vals = [self.latitude,self.longitude,self.year]
+    def summarize_annual_resource(self,return_site_lat_lon=True):
+        if return_site_lat_lon:
+            keys = ["site latitude","site longitude","resource year"]
+            vals = [self.latitude,self.longitude,self.year]
+        else:
+            keys = ["resource year"]
+            vals = [self.year]
 
         keys += ["site_gid","elevation","time zone","nsrdb latitude","nsrdb longitude"]
         vals += [self.site_gid,self.elevation,self.time_zone,self.nsrdb_latitude,self.nsrdb_longitude]
