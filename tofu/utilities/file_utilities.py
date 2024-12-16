@@ -2,7 +2,7 @@ import yaml
 import os
 from pathlib import Path
 import pandas as pd
-import geopandas as gpd
+# import geopandas as gpd
 import h5pyd
 import dill
 
