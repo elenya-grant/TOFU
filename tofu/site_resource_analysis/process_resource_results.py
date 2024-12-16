@@ -23,17 +23,17 @@ if __name__ == "__main__":
     input_config = load_yaml(input_filepath)
 
     result_folder = input_config["gid_run"]["output_folder"]
-    result_file_desc = "wind_site_resource--_" #solar_site_resource--
+    result_file_desc = "solar_site_resource--_" #solar_site_resource--
 
     result_file_type = ".pkl"
-    exlude_result_desc = result_file_desc.split("--")[0]
+    # exlude_result_desc = result_file_desc.split("--")[0]
     output_filename = result_file_desc.split("--")[0] + ".pkl"
     
     
     files = os.listdir(result_folder)
     files = [f for f in files if result_file_type in f]
     files = [f for f in files if result_file_desc in f]
-    files = [f for f in files if exlude_result_desc not in f]
+    # files = [f for f in files if exlude_result_desc not in f]
     files = [f for f in files if f!=output_filename]
     
     if len(files)>0:

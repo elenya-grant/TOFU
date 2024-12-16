@@ -100,15 +100,15 @@ class SolarResource:
             self.day_arr = f.time_index.day.values[1::2]
             self.hour_arr = f.time_index.hour.values[1::2]
             self.minute_arr = f.time_index.minute.values[1::2]
-            self.dni_arr = SAMResource.roll_timeseries((f['dni', :, site_gid][1::2]), self.time_zone, 1)
-            self.dhi_arr = SAMResource.roll_timeseries((f['dhi', :, site_gid][1::2]), self.time_zone, 1)
-            self.ghi_arr = SAMResource.roll_timeseries((f['ghi', :, site_gid][1::2]), self.time_zone, 1)
-            self.wspd_arr = SAMResource.roll_timeseries((f['wind_speed', :, site_gid][1::2]), self.time_zone, 1)
-            self.tdry_arr = SAMResource.roll_timeseries((f['air_temperature', :, site_gid][1::2]), self.time_zone, 1)
-            # self.relative_humidity_arr = SAMResource.roll_timeseries((f['relative_humidity', :, site_gid][1::2]), self.time_zone, 1)
-            # self.solar_zenith_arr = SAMResource.roll_timeseries((f['solar_zenith_angle', :, site_gid][1::2]), self.time_zone, 1)
-            self.pres_arr = SAMResource.roll_timeseries((f['surface_pressure', :, site_gid][1::2]), self.time_zone, 1)
-            self.tdew_arr = SAMResource.roll_timeseries((f['dew_point', :, site_gid][1::2]), self.time_zone, 1)
+            self.dni_arr = SAMResource.roll_timeseries((f['dni', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.dhi_arr = SAMResource.roll_timeseries((f['dhi', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.ghi_arr = SAMResource.roll_timeseries((f['ghi', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.wspd_arr = SAMResource.roll_timeseries((f['wind_speed', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.tdry_arr = SAMResource.roll_timeseries((f['air_temperature', :, self.site_gid][1::2]), self.time_zone, 1)
+            # self.relative_humidity_arr = SAMResource.roll_timeseries((f['relative_humidity', :, self.site_gid][1::2]), self.time_zone, 1)
+            # self.solar_zenith_arr = SAMResource.roll_timeseries((f['solar_zenith_angle', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.pres_arr = SAMResource.roll_timeseries((f['surface_pressure', :, self.site_gid][1::2]), self.time_zone, 1)
+            self.tdew_arr = SAMResource.roll_timeseries((f['dew_point', :, self.site_gid][1::2]), self.time_zone, 1)
     
     def format_data(self):
         # Remove data from feb29 on leap years
