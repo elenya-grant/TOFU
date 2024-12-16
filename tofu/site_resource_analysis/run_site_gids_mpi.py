@@ -12,9 +12,10 @@ from tofu.utilities.file_utilities import check_create_folder,load_yaml
 faulthandler.enable()
 from tofu.site_resource_analysis.get_resource_gids import get_wtk_site_gids,get_nsrdb_site_gids
 from tofu import INPUT_DIR
-from tofu.site_resource_analysis.filter_sitelist_for_conus import get_conus_sitelist
+from tofu.site_resource_analysis.filter_sitelist_for_conus import get_conus_sitelist,filter_sitelist_for_bounds
 from tofu.utilities.tofu_loggers import tofu_logger as tofu_log
 def get_gids(site_list,site_idxs,output_filename_base,resource_year):
+    # tofu_log.info("")
     w_lat_lons, wtk_gid_list = get_wtk_site_gids(site_list.loc[site_idxs],resource_year)
     s_lat_lons,nsrdb_gid_list = get_nsrdb_site_gids(site_list.loc[site_idxs],resource_year)
     gid_list = pd.DataFrame({"WTK gid":wtk_gid_list,"NSRDB gid":nsrdb_gid_list,"WTK Lat/Lon":w_lat_lons,"NSRDB Lat/Lon":s_lat_lons})
@@ -105,5 +106,6 @@ if __name__ == "__main__":
 
     output_filepath_base_desc = os.path.join(output_dir,"site_gids--")
     conus_sites = get_conus_sitelist(data_folder=input_config["sitelist"]["directory"],sitelist_data_filename=input_config["sitelist"]["filename"])
+    conus_sites = filter_sitelist_for_bounds(conus_sites)
     inpt = [output_filepath_base_desc,year]
     main(conus_sites,inpt)
