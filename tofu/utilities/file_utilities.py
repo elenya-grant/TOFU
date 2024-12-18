@@ -96,11 +96,28 @@ def convert_dataframe_to_gpd(df,lat_str = None,lon_str=None):
         lon_str = lon_str[0]
     df["latitude"] = pd.to_numeric(df[lat_str], errors='coerce')
     df["longitude"] = pd.to_numeric(df[lon_str], errors='coerce')
+    
+def convert_dataframe_to_gpd(df,lat_str = None,lon_str=None,data_keys=[],crs=4326):
+    import geopandas as gpd
+    if lat_str is None:
+        lat_str = [col for col in df.columns.to_list() if 'lat' in col.lower()]
+        lat_str = lat_str[0]
+    if lon_str is None:
+        lon_str = [col for col in df.columns.to_list() if 'lon' in col.lower()]
+        lon_str = lon_str[0]
+    df["latitude"] = pd.to_numeric(df[lat_str], errors='coerce')
+    df["longitude"] = pd.to_numeric(df[lon_str], errors='coerce')
+    if len(data_keys)>0:
+        for k in data_keys:
+            df[k] = pd.to_numeric(df[k], errors='coerce')
     df_geo = gpd.GeoDataFrame(df, 
                 geometry = gpd.points_from_xy(
                         df.longitude,
-                        df.latitude
+                        df.latitude,
+                        crs=crs,
                 ))
+    return df_geo
+
     return df_geo
 
 def find_data_shapefile(files):
