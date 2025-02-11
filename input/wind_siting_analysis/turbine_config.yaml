@@ -11,7 +11,7 @@ Bergey Excel 15:
   # https://nrel.github.io/turbine-models/BergeyExcel15_15.6kW_9.6.html
 Nothern Power Systems 100:
   class: commercial
-  rotor_diameter: 27.6 #21, 24 or 28m options
+  rotor_diameter: 20.7 #21, 24 or 28m options
   hub_height: 37 #40
   rated_power_kW: 100
   power_curve_filename: "NPS100C-21_100kW_20.7.csv"
@@ -39,10 +39,10 @@ Bespoke 6 MW 170:
   rated_power_kW: 6000
   power_curve_filename: "2023NREL_Bespoke_6MW_170.csv"
   avg_windspeed_110m: [7.36,9.52]
-Bespoke 6 MW 196:
-  class: utility
-  rotor_diameter: 196
-  hub_height: 140
-  rated_power_kW: 6000
-  power_curve_filename: "2023NREL_Bespoke_6MW_196.csv"
-  avg_windspeed_110m: [5.13,5.13]
+# Bespoke 6 MW 196:
+#   class: utility
+#   rotor_diameter: 196
+#   hub_height: 140
+#   rated_power_kW: 6000
+#   power_curve_filename: "2023NREL_Bespoke_6MW_196.csv"
+#   avg_windspeed_110m: [5.13,5.13]

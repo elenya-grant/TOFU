@@ -43,7 +43,7 @@ def calc_buildable_area(land_shape,setback_distance_m,df,i_usable_sites,turb_nam
     df.loc[i_usable_sites,"{}: buildable land perimeter [m]".format(turb_name)] = p
     df.loc[i_usable_sites,"{}: buildable land area [m^2]".format(turb_name)] = area
     return df
-    
+
 def make_multi_turbine_layout_square(layout_config,rotor_diameter,a_buildable_max:float,make_layout=False,plot_layout=False):
     spacing_x = min([layout_config["row_spacing"]*rotor_diameter,layout_config["column_spacing"]*rotor_diameter])
     spacing_y = max([layout_config["row_spacing"]*rotor_diameter,layout_config["column_spacing"]*rotor_diameter])
@@ -54,8 +54,14 @@ def make_multi_turbine_layout_square(layout_config,rotor_diameter,a_buildable_ma
     y_buffer = spacing_y/10
     x_locs = np.arange(0,area_width+x_buffer,spacing_x)
     y_locs = np.arange(0,area_length+y_buffer,spacing_y)
-    n_turbs = len(x_locs)*len(y_locs)
+    
 
+    if max(x_locs)>area_width:
+        x_locs = [x for x in x_locs if x<=area_width]
+    if max(y_locs)>area_length:
+        y_locs = [y for y in y_locs if y<=area_length]
+
+    n_turbs = len(x_locs)*len(y_locs)
     if make_layout or plot_layout:
         turbine_layout_x = np.zeros(len(x_locs)*len(y_locs))
         turbine_layout_y = np.zeros(len(x_locs)*len(y_locs))
@@ -75,3 +81,9 @@ def make_multi_turbine_layout_square(layout_config,rotor_diameter,a_buildable_ma
         return n_turbs,locs
     else:
         return n_turbs
+        
+def calc_multi_turbine_min_area(layout_config,rotor_diameter):
+    spacing_x = min([layout_config["row_spacing"]*rotor_diameter,layout_config["column_spacing"]*rotor_diameter])
+    # spacing_y = max([layout_config["row_spacing"]*rotor_diameter,layout_config["column_spacing"]*rotor_diameter])
+    min_area_square = spacing_x*spacing_x
+    return min_area_square

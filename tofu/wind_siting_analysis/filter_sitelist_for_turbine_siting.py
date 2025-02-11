@@ -20,7 +20,7 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "L
     turb_config = load_yaml(turbine_config_filepath)
 
     sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
-    columns = ["parcel_lid","MatchID","latitude","longitude","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre"]
+    columns = ["parcel_lid","MatchID","latitude","longitude","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre","wind_exclusion","state"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
     df = df[df["wind_ground_area"]>0]
 
@@ -64,6 +64,11 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "L
     sitelist_output_filename = "full_sitelist_wind-{}-{}x{}_spacing.csv".format(layout_config["layout_shape"],layout_config["row_spacing"],layout_config["column_spacing"])
     sitelist_output_filepath = os.path.join(output_results_dir,sitelist_output_filename)
     df.to_csv(sitelist_output_filepath)
+
+    sitelist_output_filename = "nonexclusions_sitelist_wind-{}-{}x{}_spacing.csv".format(layout_config["layout_shape"],layout_config["row_spacing"],layout_config["column_spacing"])
+    sitelist_output_filepath = os.path.join(output_results_dir,sitelist_output_filename)
+    tmp_df = df[df["wind_exclusion"]==0]
+    tmp_df.to_csv(sitelist_output_filepath)
     print("done!")
     print("wrote output sitelist file to {}".format(sitelist_output_filepath))
     print("wrote turbine summary info file to {}".format(turb_config_output_filepath))
