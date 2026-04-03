@@ -93,12 +93,3 @@ Step 5. finish install:
     ```
 3. download and save wind resource data (MPI)
     - example batch script lives here: `input/wind_resource/download_wind_resource.sh`
-    ```
-    cd scratch/<user>
-    salloc --time=60 --account=<project allocation> --ntasks=2 --partition=shared --mem=20GB
-    module load conda
-    conda activate /scratch/<user>/tofu_env
-    module load cray-mpich
-    export TMPDIR=/scratch/<user>/sc_tmp/
-    srun -n 2 /scratch/<user>/tofu_env/bin/python /scratch/<user>/TOFU/tofu/site_resource_analysis/run_site_gids_mpi.py True False
-    ```
