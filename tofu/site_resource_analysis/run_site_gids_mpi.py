@@ -14,6 +14,7 @@ from tofu.site_resource_analysis.get_resource_gids import get_wtk_site_gids,get_
 from tofu import INPUT_DIR
 from tofu.site_resource_analysis.filter_sitelist_for_conus import get_conus_sitelist,filter_sitelist_for_bounds
 from tofu.utilities.tofu_loggers import tofu_logger as tofu_log
+
 def get_gids(site_list,site_idxs,output_filename_base,resource_year):
     # tofu_log.info("")
     w_lat_lons, wtk_gid_list = get_wtk_site_gids(site_list.loc[site_idxs],resource_year)

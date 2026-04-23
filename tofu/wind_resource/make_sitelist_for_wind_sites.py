@@ -5,8 +5,8 @@ from tofu import DATA_DIR,OUTPUT_DIR,INPUT_DIR
 from tofu.utilities.file_utilities import load_yaml,check_create_folder
 from tofu.site_resource_analysis.filter_sitelist_for_conus import  get_conus_sitelist
 
-sitelist_dir = os.path.join(str(DATA_DIR),"iedo_data","updated_11_27_2024")
-manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="LC_facility_parcels_NREL_11_27.csv")
+sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
+manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="reV_LC_facility_level_sitelist_4_22_2026.csv")
 manuf_sites = manuf_sites[manuf_sites["wind_exclusion"]==False]
 manuf_site_ids = manuf_sites["MatchID"].to_list()
 

@@ -14,7 +14,7 @@ def load_sorted_file_remove_nonwind_sites(r_space,c_space,output_dir,shape="squa
 
     df = pd.read_pickle(summary_filepath_pkl)
 
-    geo_cols = ["parcel_lid","MatchID","latitude","longitude","state","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre"]
+    geo_cols = ["MATCH_ID", "PARCEL_LID","parcel_centroid_latitude","parcel_centroid_longitude","usable_wind_sqm","SITE_STATE", "under_1_acre"]
     turb_cols = [k for k in df.columns.to_list() if k not in geo_cols]
     df = df.dropna(axis='index',how='all',subset=turb_cols)
 
@@ -135,8 +135,8 @@ def make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list =
             load_sorted_file_remove_nonwind_sites(r_space,c_space,output_dir,shape="square",use_all_sites=use_full_sitelist)
     
     if make_sorted_list:
-        site_columns = ["parcel_lid","MatchID","latitude","longitude","state","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre","best turbine"]
-        geo_cols = ["parcel_lid","MatchID","latitude","longitude","state","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre"]
+        site_columns = ["MATCH_ID","PARCEL_LID","parcel_centroid_latitude","parcel_centroid_longitude","SITE_STATE","usable_wind_sqm","under_1_acre","best turbine"]
+        geo_cols = ["MATCH_ID","PARCEL_LID","parcel_centroid_latitude","parcel_centroid_longitude","SITE_STATE","usable_wind_sqm","under_1_acre"]
         for r_space,c_space in zip(row_spacings,col_spacings):
             if use_full_sitelist:
                 sitelist_filename = "full_sitelist_wind-{}-{}x{}_spacing.csv".format(shape,r_space,c_space)

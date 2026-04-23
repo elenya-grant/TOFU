@@ -5,11 +5,14 @@ import numpy as np
 from tofu.utilities.file_utilities import load_yaml, check_create_folder
 from tofu.wind_siting_analysis.wind_tools import calc_setback_distance, calc_buildable_area, make_multi_turbine_layout_square, calc_multi_turbine_min_area
 
-def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "LC_facility_parcels_NREL_9_27.csv"):
+# The default file name is the old sitelist file that was used for the initial analysis.
+def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv",data_folder="/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"):
     """_summary_
 
     Args:
         layout_str (str): either "5x5" or "3x7" or a new string if a new layout_config file is made
+        sitelist_data_filename (str): filename of the sitelist CSV
+        data_folder (str or None): directory containing the sitelist CSV. If None, uses TOFU DATA_DIR.
     """
     input_config_dir = os.path.join(str(INPUT_DIR),os.path.dirname(__file__).split("/")[-1])
     output_results_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
@@ -19,10 +22,13 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "L
     layout_config = load_yaml(layout_config_filepath)
     turb_config = load_yaml(turbine_config_filepath)
 
-    sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
-    columns = ["parcel_lid","MatchID","latitude","longitude","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre","wind_exclusion","state"]
+    if data_folder is None:
+        sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
+    else:
+        sitelist_filepath = os.path.join(data_folder,sitelist_data_filename)
+    columns = ["MATCH_ID", "PARCEL_LID","parcel_centroid_latitude","parcel_centroid_longitude","usable_wind_sqm","under_1_acre","SITE_STATE"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
-    df = df[df["wind_ground_area"]>0]
+    df = df[df["usable_wind_sqm"]>0]
 
     for turb in turb_config.keys():
         print("starting turbine: {}".format(turb))
@@ -35,10 +41,10 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "L
         if layout_config["setback_shape"]=="circle":
             minimum_area_m2 = np.pi*(setback_distance**2)
         turb_config[turb].update({"minimum_area_m2":minimum_area_m2})
-        n_sites_with_min_area = len(df[df["wind_ground_area"]>=minimum_area_m2])
+        n_sites_with_min_area = len(df[df["usable_wind_sqm"]>=minimum_area_m2])
         turb_config[turb].update({"max # sites":n_sites_with_min_area})
         
-        i_usable_sites = df[df["wind_ground_area"]>=minimum_area_m2].index.to_list()
+        i_usable_sites = df[df["usable_wind_sqm"]>=minimum_area_m2].index.to_list()
 
         df = calc_buildable_area(land_shape = layout_config["layout_shape"],setback_distance_m = setback_distance,df=df,i_usable_sites = i_usable_sites,turb_name = turb)
         

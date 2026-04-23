@@ -14,7 +14,7 @@ c_spacings = [d[1] for d in turbine_layout_dspacing_cases]
 run_filtering = True
 if run_filtering:
     for layout_str in layout_types:
-        filter_sitelist_for_wind_turbines(layout_str,sitelist_data_filename = "LC_facility_parcels_NREL_9_27.csv")
+        filter_sitelist_for_wind_turbines(layout_str,sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv")
 
 output_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
 # all sites
@@ -25,7 +25,9 @@ make_sorted_sitelist(output_dir,make_sorted_list = True,clean_sorted_list = Fals
 print("cleaning sorted sitelist")
 make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list = True,row_spacings = r_spacings,col_spacings = c_spacings,shape = "square",use_full_sitelist=True)
 
-# only sites without wind exclusions
+# only sites without wind exclusions - airport, DoD, etc.
+# These things below will likely be redundant since an update to the new sitelist is that if the site has any exclusions,
+# then the usable wind area is set to 0, so the filtering above should have already removed these sites. But just in case, we can run this too.
 print("cleaning sitelist for non exclusion sites...")
 clean_filtered_sitelist_files(shape = "square", row_spacings = r_spacings, col_spacings = c_spacings, make_summary = True,use_all_sites=False)
 print("making sorted sitelist")

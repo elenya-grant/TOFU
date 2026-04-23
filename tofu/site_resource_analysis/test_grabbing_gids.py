@@ -10,7 +10,7 @@ buggy_df = pd.DataFrame({"latitude":buggy_lats,"longitude":buggy_lons})
 n_sites = 10
 resource_year = 2012
 
-site_df = get_conus_sitelist(data_folder= "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_9_27_2024")
+site_df = get_conus_sitelist(data_folder= "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2024")
 site_df = filter_sitelist_for_bounds(site_df)
 print("{} sites".format(len(site_df)))
 print("starting...")

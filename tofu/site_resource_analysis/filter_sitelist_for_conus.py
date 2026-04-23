@@ -4,7 +4,7 @@ import os
 import numpy as np
 from tofu.utilities.file_utilities import load_yaml, check_create_folder
 
-def get_conus_sitelist(data_folder = None,sitelist_data_filename = "LC_facility_parcels_NREL_9_27.csv"):
+def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv"):
     non_conus = ['HI','VI','MP','GU','AK','AS','PR']
     
     if data_folder is None:
