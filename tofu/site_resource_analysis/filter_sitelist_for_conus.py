@@ -4,19 +4,19 @@ import os
 import numpy as np
 from tofu.utilities.file_utilities import load_yaml, check_create_folder
 
-def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv"):
+def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "facility_level_sitelist_2026_04_22.csv"):
     non_conus = ['HI','VI','MP','GU','AK','AS','PR']
     
     if data_folder is None:
         sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
     else:
         sitelist_filepath = os.path.join(data_folder,sitelist_data_filename)
-    columns = ["parcel_lid","MatchID","state","latitude","longitude","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre","wind_exclusion"]
+    columns = ["PARCEL_LID","obs_id","SITE_STATE","best_lat","best_lon","usable_wind_sqm","under_1_acre"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
 
     for n in non_conus:
-        df = df[df["state"] != n]
-    df = df.dropna(axis=0,how='any',subset=["latitude","longitude","MatchID"])
+        df = df[df["SITE_STATE"] != n]
+    df = df.dropna(axis=0,how='any',subset=["best_lat","best_lon","obs_id"])
     # lat_min, lon_min, lat_max, lon_max
     return df
 # []

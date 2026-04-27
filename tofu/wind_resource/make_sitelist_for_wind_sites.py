@@ -6,17 +6,17 @@ from tofu.utilities.file_utilities import load_yaml,check_create_folder
 from tofu.site_resource_analysis.filter_sitelist_for_conus import  get_conus_sitelist
 
 sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
-manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="reV_LC_facility_level_sitelist_4_22_2026.csv")
-manuf_sites = manuf_sites[manuf_sites["wind_exclusion"]==False]
-manuf_site_ids = manuf_sites["MatchID"].to_list()
+manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="aggregated_facility_level_site_list_2026_04_23.csv")
+manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==True]
+manuf_site_ids = manuf_sites["PARCEL_LID"].to_list()
 
 layout = "3x7"
 wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),"wind_siting_analysis")
 wind_sitelist_filename = f"best_turb_nonexclusionsitelist_wind-square-{layout}_spacing.pkl"
 best_turb_per_site = pd.read_pickle(os.path.join(wind_sitelist_dir,wind_sitelist_filename))
 best_turb_per_site = best_turb_per_site[best_turb_per_site["under_1_acre"]==False]
-best_turb_per_site = best_turb_per_site[best_turb_per_site["wind_exclusion"]==False]
-best_turb_per_site = best_turb_per_site.dropna(axis=0,how="any",subset=["MatchID","latitude","longitude"])
+#best_turb_per_site = best_turb_per_site[best_turb_per_site["wind_exclusion"]==False]
+best_turb_per_site = best_turb_per_site.dropna(axis=0,how="any",subset=["PARCEL_LID","latitude","longitude"])
 turb_unique_cols = [k for k in best_turb_per_site.columns.to_list() if k not in manuf_sites.columns.to_list()]
 # wind_sitelist_ids = best_turb_per_site["MatchID"].to_list()
 
@@ -26,13 +26,13 @@ turbine_to_hubht = {k:v["hub_height"] for k,v in turbine_config.items()}
 
 site_gid_fpath = os.path.join(str(OUTPUT_DIR),"site_resource_analysis","site_gid_parcels.pkl")
 site_gids = pd.read_pickle(site_gid_fpath)
-site_gids = site_gids.dropna(axis=0,how="any",subset=["MatchID","WTK gid","NSRDB gid","latitude","longitude"])
+site_gids = site_gids.dropna(axis=0,how="any",subset=["PARCEL_LID","WTK gid","NSRDB gid","latitude","longitude"])
 gid_unique_cols = [k for k in site_gids.columns.to_list() if k not in manuf_sites.columns.to_list()]
 # site_gid_ids = site_gids["MatchID"].to_list()
 
-t1 = best_turb_per_site.set_index(keys=["MatchID"]).loc[manuf_site_ids][turb_unique_cols]
-t2 = site_gids.set_index(keys=["MatchID"]).loc[manuf_site_ids][gid_unique_cols]
-final_df = pd.concat([manuf_sites.set_index(keys=["MatchID"]).loc[manuf_site_ids],t1,t2],axis=1)
+t1 = best_turb_per_site.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids][turb_unique_cols]
+t2 = site_gids.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids][gid_unique_cols]
+final_df = pd.concat([manuf_sites.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids],t1,t2],axis=1)
 
 final_df["hub_height"] = None
 for turbine,hub_height in turbine_to_hubht.items():

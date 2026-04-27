@@ -14,7 +14,7 @@ c_spacings = [d[1] for d in turbine_layout_dspacing_cases]
 run_filtering = True
 if run_filtering:
     for layout_str in layout_types:
-        filter_sitelist_for_wind_turbines(layout_str,sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv")
+        filter_sitelist_for_wind_turbines(layout_str,sitelist_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv")
 
 output_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
 # all sites

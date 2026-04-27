@@ -118,8 +118,8 @@ if __name__=="__main__":
     input_dict = {
         "output_dir":wind_resource_dir,
         "resource_year":2012,
-        "lat_string":"parcel_centroid_latitude",
-        "lon_string":"parcel_centroid_longitude",
+        "lat_string":"best_lat",
+        "lon_string":"best_lon",
         "hub_ht_str": ["turbine_1 hub_height","turbine_2 hub_height"],
         }
     main(sitelist,input_dict)

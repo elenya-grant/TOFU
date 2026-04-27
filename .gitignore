@@ -1,2 +1,6 @@
 # Ignore the TOFU.egg-info directory
 TOFU.egg-info/
+tofu/utilities/__pycache__/
+tofu/__pycache__/
+tofu/site_resource_analysis/__pycache__/
+tofu_logs/

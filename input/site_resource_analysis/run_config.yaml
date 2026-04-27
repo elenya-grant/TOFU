@@ -4,7 +4,7 @@ gid_run:
   unique_gid_list: "unique_gid_list.pkl"
 sitelist:
   directory: "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
-  filename: "reV_LC_facility_level_sitelist_4_22_2026.csv"
+  filename: "facility_level_site_list_2026_04_22.csv"
 resource_runs:
   unique_gid_filename:
 resource_data:

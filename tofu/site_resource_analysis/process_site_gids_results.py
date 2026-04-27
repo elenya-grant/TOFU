@@ -15,7 +15,7 @@ def get_unique_gids(gid_df,unq_gid_filename):
 
 def combine_files(folder,filename_list,output_fname):
     res_df = pd.DataFrame()
-    info_a_cols = ["parcel_lid","MatchID","state","latitude","longitude","parcel_latitude","parcel_longitude","wind_ground_area","under_1_acre"]
+    info_a_cols = ["PARCEL_LID","obs_id","SITE_STATE","best_lat","best_lon","usable_wind_sqm","under_1_acre"]
     info_b_cols = ["WTK gid","NSRDB gid","WTK Lat/Lon","NSRDB Lat/Lon"]
     for f in filename_list:
         filename = os.path.join(folder,f)

@@ -6,7 +6,7 @@ from tofu.utilities.file_utilities import load_yaml, check_create_folder
 from tofu.wind_siting_analysis.wind_tools import calc_setback_distance, calc_buildable_area, make_multi_turbine_layout_square, calc_multi_turbine_min_area
 
 # The default file name is the old sitelist file that was used for the initial analysis.
-def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "reV_LC_facility_level_sitelist_4_22_2026.csv",data_folder="/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"):
+def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv",data_folder="/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"):
     """_summary_
 
     Args:
@@ -26,7 +26,7 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "r
         sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
     else:
         sitelist_filepath = os.path.join(data_folder,sitelist_data_filename)
-    columns = ["MATCH_ID", "PARCEL_LID","parcel_centroid_latitude","parcel_centroid_longitude","usable_wind_sqm","under_1_acre","SITE_STATE"]
+    columns = ["obs_id", "PARCEL_LID","best_lat","best_lon","usable_wind_sqm","under_1_acre","SITE_STATE"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
     df = df[df["usable_wind_sqm"]>0]
 
