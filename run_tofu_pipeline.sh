@@ -16,9 +16,10 @@ module purge
 # ============================================================
 # Environment setup
 # ============================================================
+module load gcc-native/12.1
+module load cray-mpich/8.1.23
 module load conda
 conda activate /home/dbernal/.conda-envs/tofu
-module load cray-mpich
 export TMPDIR=/tmp/scratch_tofu_$$
 mkdir -p "$TMPDIR"
 
