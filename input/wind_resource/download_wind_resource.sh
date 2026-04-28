@@ -4,13 +4,12 @@
 #SBATCH --partition=standard
 #SBATCH --nodes=8
 #SBATCH --ntasks-per-node=78
-####SBATCH --time=48:00:00
 #SBATCH --time=4:00:00
 #SBATCH --account=iedo00onsite
 #SBATCH --mail-user dbernal@nlr.gov
 #SBATCH --mail-type BEGIN,END,FAIL
 module load conda
-conda activate /scratch/egrant/tofu_env
+conda activate /home/dbernal/.conda-envs/tofu
 module load cray-mpich
 export TMPDIR=/scratch/egrant/sc_tmp/
-srun -N 8 --ntasks-per-node=78 /scratch/egrant/tofu_env/bin/python /scratch/egrant/TOFU/tofu/wind_resource/download_wind_resource_data_mpi.py
+srun -N 8 --ntasks-per-node=78 /home/dbernal/.conda-envs/tofu/bin/python /projects/iedo00onsite/TOFU/tofu/wind_resource/download_wind_resource_data_mpi.py

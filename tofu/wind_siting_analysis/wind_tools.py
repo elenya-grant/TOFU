@@ -28,7 +28,7 @@ def calc_buildable_area_square(setback_distance_m,wind_ground_area_m2):
     return width_buildable,A_buildable,perimeter_buildable
 
 def calc_buildable_area(land_shape,setback_distance_m,df,i_usable_sites,turb_name):
-    wind_area = df.loc[i_usable_sites,"wind_ground_area"].to_list()
+    wind_area = df.loc[i_usable_sites,"usable_wind_sqm"].to_list()
     if land_shape == "circle":
         r,area,p = calc_buildable_area_circle(setback_distance_m,wind_area)
         df["{}: buildable land radius [m]".format(turb_name)] = np.zeros(len(df))

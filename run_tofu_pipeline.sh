@@ -16,10 +16,11 @@ module purge
 # ============================================================
 # Environment setup
 # ============================================================
-module load gcc-native/12.1
-module load cray-mpich/8.1.23
+module load wrf/4.2.2-cray
+module load cray-mpich/8.1.28
 module load conda
 conda activate /home/dbernal/.conda-envs/tofu
+export LD_LIBRARY_PATH=/opt/cray/libfabric/1.15.2.0/lib64:$CRAY_MPICH_DIR/lib:$LD_LIBRARY_PATH
 export TMPDIR=/tmp/scratch_tofu_$$
 mkdir -p "$TMPDIR"
 
