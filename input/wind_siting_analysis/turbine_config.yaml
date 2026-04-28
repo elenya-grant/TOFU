@@ -9,7 +9,7 @@ Bergey Excel 15:
   # https://www.bergey.com/products/grid-tied-turbines/excel-15/
   # -> needs 2 acres of land
   # https://nrel.github.io/turbine-models/BergeyExcel15_15.6kW_9.6.html
-Nothern Power Systems 100:
+Northern Power Systems 100:
   class: commercial
   rotor_diameter: 20.7 #21, 24 or 28m options
   hub_height: 37 #40
