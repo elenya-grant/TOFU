@@ -8,5 +8,5 @@ tofu/wind_siting_analysis/__pycache__/
 tofu/wind_resource/__pycache__/
 
 # Ignore the csv and xlsx file in the data folder
-tofu/data/*.csv
-tofu/data/*.xlsx
+data/*.csv
+data/*.xlsx
