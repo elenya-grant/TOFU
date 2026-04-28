@@ -5,6 +5,10 @@ from tofu import DATA_DIR,OUTPUT_DIR,INPUT_DIR
 from tofu.utilities.file_utilities import load_yaml,check_create_folder
 from tofu.site_resource_analysis.filter_sitelist_for_conus import  get_conus_sitelist
 
+# Load the GID-run config so we read the aggregated GID file from the same folder
+# `process_site_gids_results.py` writes to.
+_gid_run_cfg = load_yaml(os.path.join(str(INPUT_DIR), "site_resource_analysis", "run_config.yaml"))["gid_run"]
+
 sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
 manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="aggregated_facility_level_site_list_2026_04_23.csv")
 manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==True]
@@ -24,7 +28,7 @@ turbine_config_filepath = os.path.join(str(INPUT_DIR),"wind_siting_analysis","tu
 turbine_config = load_yaml(turbine_config_filepath)
 turbine_to_hubht = {k:v["hub_height"] for k,v in turbine_config.items()}
 
-site_gid_fpath = os.path.join(str(OUTPUT_DIR),"site_resource_analysis","site_gid_list.pkl")
+site_gid_fpath = os.path.join(_gid_run_cfg["output_folder"], _gid_run_cfg["final_gid_sitelist"])
 site_gids = pd.read_pickle(site_gid_fpath)
 site_gids = site_gids.dropna(axis=0,how="any",subset=["PARCEL_LID","WTK gid","NSRDB gid","latitude","longitude"])
 gid_unique_cols = [k for k in site_gids.columns.to_list() if k not in manuf_sites.columns.to_list()]

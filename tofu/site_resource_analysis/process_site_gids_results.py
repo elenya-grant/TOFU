@@ -61,11 +61,8 @@ if __name__ == "__main__":
     result_folder = input_config["gid_run"]["output_folder"]
     result_file_desc = "site_gids--_"
     result_file_type = ".pkl"
-    exlude_result_desc = input_config["gid_run"]["final_gid_sitelist"]
-    # output_filename = input_config["gid_run"]["final_gid_sitelist"]
-    
-    exlude_result_desc = "site_gid_list.pkl"
-    output_filename = "site_gid_list.pkl"
+    output_filename = input_config["gid_run"]["final_gid_sitelist"]
+    exlude_result_desc = output_filename
     unq_gid_filepath = os.path.join(result_folder,input_config["gid_run"]["unique_gid_list"])
     # --- BELOW IS HOW TO REMOVE FILES ---
     # remove_files(result_folder,result_file_desc,"site_resource")

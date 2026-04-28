@@ -1,10 +1,10 @@
 gid_run:
   output_folder: "/projects/iedo00onsite/onsite-energy-analysis/data/site_resource_summaries"
-  final_gid_sitelist: "site_gids.pkl"
+  final_gid_sitelist: "site_gid_list.pkl"
   unique_gid_list: "unique_gid_list.pkl"
 sitelist:
   directory: "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
-  filename: "facility_level_site_list_2026_04_22.csv"
+  filename: "aggregated_facility_level_site_list_2026_04_23.csv"
 resource_runs:
   unique_gid_filename:
 resource_data:

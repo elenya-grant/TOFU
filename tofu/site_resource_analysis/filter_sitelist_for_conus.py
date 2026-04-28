@@ -19,7 +19,7 @@ def _validate_data_folder(data_folder):
             f"data_folder override '{data_folder}' must resolve under '{_ALLOWED_DATA_ROOT}'"
         )
 
-def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "facility_level_sitelist_2026_04_22.csv"):
+def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv"):
     non_conus = ['HI','VI','MP','GU','AK','AS','PR']
 
     _validate_data_folder(data_folder)

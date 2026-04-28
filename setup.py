@@ -1,7 +1,7 @@
 from pathlib import Path
 from setuptools import setup, find_packages
 
-NAME = "tofu"
+NAME = "TOFU"
 DESCRIPTION = "playground for onsite analysis"
 URL = "https://github.com/elenya-grant/TOFU.git"
 EMAIL = "elenya.grant@nrel.gov"
