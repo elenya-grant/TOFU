@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=52
 #SBATCH --time=8:00:00
 #SBATCH --account=iedo00onsite
-#SBATCH --mail-user dbernal@nrel.gov
+#SBATCH --mail-user dbernal@nlr.gov
 #SBATCH --mail-type BEGIN,END,FAIL
 
 set -e  # exit on any error
