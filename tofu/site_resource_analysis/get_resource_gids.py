@@ -15,7 +15,6 @@ import numpy as np
 
 # if len(lat_lon.shape) == 1:
 #     lat_lon = np.expand_dims(lat_lon, axis=0)
-[]
 from rex import WindX
 from rex import NSRDBX
 from rex.utilities.exceptions import ResourceValueError
@@ -34,8 +33,8 @@ def handle_resource(lat_lon_pairs,error_string):
 
 def get_nsrdb_site_gids(site_df,resource_year,verbose = True):
     nsrdb_file = '/datasets/NSRDB/current/nsrdb_{year}.h5'.format(year=resource_year)
-    lats = site_df["best_lat"].to_list()
-    lons = site_df["best_lon"].to_list()
+    lats = site_df["latitude"].to_list()
+    lons = site_df["longitude"].to_list()
     lat_lon_pairs = [(lat,lon) for lat,lon in zip(lats,lons)]
     with NSRDBX(nsrdb_file, hsds=False) as f:
         try:
@@ -57,8 +56,8 @@ def get_nsrdb_site_gids(site_df,resource_year,verbose = True):
 
 def get_wtk_site_gids(site_df,resource_year,verbose = True):
     wtk_file = '/datasets/WIND/conus/v1.0.0/wtk_conus_{year}.h5'.format(year=resource_year)
-    lats = site_df["best_lat"].to_list()
-    lons = site_df["best_lon"].to_list()
+    lats = site_df["latitude"].to_list()
+    lons = site_df["longitude"].to_list()
     lat_lon_pairs = [(lat,lon) for lat,lon in zip(lats,lons)]
     with WindX(wtk_file, hsds=False) as f:
         try:

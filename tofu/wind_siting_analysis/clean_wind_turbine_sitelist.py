@@ -25,7 +25,6 @@ def load_sorted_file_remove_nonwind_sites(r_space,c_space,output_dir,shape="squa
 
     clean_filepath_csv = os.path.join(output_dir,clean_filename)
     clean_filepath_pkl = os.path.join(output_dir,clean_filename.replace(".csv",".pkl"))
-    []
     df.to_pickle(clean_filepath_pkl)
     df.to_csv(clean_filepath_csv)
     print("done")
@@ -169,7 +168,6 @@ def make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list =
                 best_turb_df = best_turb_df.rename(columns=dict(zip(added_cols,new_cols)))
                 best_turb_df = best_turb_df.drop(columns = geo_cols)
                 final_df = pd.concat([final_df,best_turb_df],axis=1)
-                []
 
             if use_full_sitelist:
                 summary_filename = "sorted_turb_fullsitelist_wind-{}-{}x{}_spacing.csv".format(shape,r_space,c_space)
@@ -180,4 +178,4 @@ def make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list =
             final_df.to_csv(summary_filepath)
             final_df.to_pickle(summary_filepath_pkl)
             print("done")
-            []
+

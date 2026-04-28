@@ -24,7 +24,7 @@ turbine_config_filepath = os.path.join(str(INPUT_DIR),"wind_siting_analysis","tu
 turbine_config = load_yaml(turbine_config_filepath)
 turbine_to_hubht = {k:v["hub_height"] for k,v in turbine_config.items()}
 
-site_gid_fpath = os.path.join(str(OUTPUT_DIR),"site_resource_analysis","site_gid_parcels.pkl")
+site_gid_fpath = os.path.join(str(OUTPUT_DIR),"site_resource_analysis","site_gid_list.pkl")
 site_gids = pd.read_pickle(site_gid_fpath)
 site_gids = site_gids.dropna(axis=0,how="any",subset=["PARCEL_LID","WTK gid","NSRDB gid","latitude","longitude"])
 gid_unique_cols = [k for k in site_gids.columns.to_list() if k not in manuf_sites.columns.to_list()]
@@ -46,4 +46,3 @@ check_create_folder(final_data_dir)
 final_data_fpath = os.path.join(final_data_dir,final_data_fname)
 final_df.to_pickle(final_data_fpath)
 final_df.to_csv(final_data_fpath.replace(".pkl",".csv"))
-[]

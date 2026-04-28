@@ -14,7 +14,7 @@ from tofu.wind_resource.get_save_wind_resource_data import download_wind_resourc
 
 def do_something(sitelist,match_id,input_cnfg):
     if "hub_ht_str" in input_cnfg.keys():
-        if isinstance(input_cnfg["hubt_ht_str"],list):
+        if isinstance(input_cnfg["hub_ht_str"],list):
             for hh_str in input_cnfg["hub_ht_str"]:
                 download_wind_resource_for_single_site(
                     sitelist,
@@ -33,7 +33,7 @@ def do_something(sitelist,match_id,input_cnfg):
                 resource_year=input_cnfg["resource_year"],
                 lat_string=input_cnfg["lat_string"],
                 lon_string=input_cnfg["lon_string"],
-                hub_height_str = input_cnfg["hubt_ht_str"],
+                hub_height_str = input_cnfg["hub_ht_str"],
             )
     else:
         download_wind_resource_for_single_site(
@@ -118,9 +118,9 @@ if __name__=="__main__":
     input_dict = {
         "output_dir":wind_resource_dir,
         "resource_year":2012,
-        "lat_string":"best_lat",
-        "lon_string":"best_lon",
-        "hub_ht_str": ["turbine_1 hub_height","turbine_2 hub_height"],
+        "lat_string":"latitude",
+        "lon_string":"longitude",
+        "hub_ht_str": "hub_height",
         }
     main(sitelist,input_dict)
     

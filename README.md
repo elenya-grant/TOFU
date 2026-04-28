@@ -20,12 +20,12 @@ Step 3. install dependencies
     pip install -r requirements.txt
     ```
 
-Step 4. (optional - for HPC parallel runs) install mpi4py
+Step 4. install TOFU in editable mode:
     ```
     pip install -e .
     ```
 
-Step 5. finish install:
+Step 5. (optional - for HPC parallel runs only) install mpi4py:
     ```
-    pip install -e .
+    pip install mpi4py
     ```

@@ -5,6 +5,21 @@ import numpy as np
 from tofu.utilities.file_utilities import load_yaml, check_create_folder
 from tofu.wind_siting_analysis.wind_tools import calc_setback_distance, calc_buildable_area, make_multi_turbine_layout_square, calc_multi_turbine_min_area
 
+# Allowed root for caller-provided overrides of `data_folder`. The current
+# absolute default is kept for backwards compatibility, but any override must
+# resolve under this directory tree.
+_ALLOWED_DATA_ROOT = "/projects/iedo00onsite"
+
+def _validate_data_folder(data_folder):
+    if data_folder is None:
+        return
+    abs_path = os.path.realpath(data_folder)
+    allowed_root = os.path.realpath(_ALLOWED_DATA_ROOT)
+    if os.path.commonpath([abs_path, allowed_root]) != allowed_root:
+        raise ValueError(
+            f"data_folder override '{data_folder}' must resolve under '{_ALLOWED_DATA_ROOT}'"
+        )
+
 # The default file name is the old sitelist file that was used for the initial analysis.
 def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv",data_folder="/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"):
     """_summary_
@@ -22,12 +37,14 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "a
     layout_config = load_yaml(layout_config_filepath)
     turb_config = load_yaml(turbine_config_filepath)
 
+    _validate_data_folder(data_folder)
     if data_folder is None:
         sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
     else:
         sitelist_filepath = os.path.join(data_folder,sitelist_data_filename)
     columns = ["obs_id", "PARCEL_LID","best_lat","best_lon","usable_wind_sqm","under_1_acre","SITE_STATE"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
+    df = df.rename(columns={"best_lat": "latitude", "best_lon": "longitude"})
     df = df[df["usable_wind_sqm"]>0]
 
     for turb in turb_config.keys():
@@ -71,10 +88,8 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "a
     sitelist_output_filepath = os.path.join(output_results_dir,sitelist_output_filename)
     df.to_csv(sitelist_output_filepath)
 
-    sitelist_output_filename = "nonexclusions_sitelist_wind-{}-{}x{}_spacing.csv".format(layout_config["layout_shape"],layout_config["row_spacing"],layout_config["column_spacing"])
-    sitelist_output_filepath = os.path.join(output_results_dir,sitelist_output_filename)
-    tmp_df = df[df["wind_exclusion"]==0]
-    tmp_df.to_csv(sitelist_output_filepath)
+    # Note: the legacy `wind_exclusion` column has been retired in the new sitelist
+    # data, so the previous "nonexclusions_sitelist_*" output is no longer produced.
     print("done!")
     print("wrote output sitelist file to {}".format(sitelist_output_filepath))
     print("wrote turbine summary info file to {}".format(turb_config_output_filepath))

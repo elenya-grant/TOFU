@@ -9,7 +9,8 @@ LOG_DIR = os.path.join(str(ROOT_DIR),"tofu_logs")
 if not os.path.isdir(LOG_DIR):
     os.makedirs(LOG_DIR,exist_ok=True)
 
-log_description = "testing_gid"
+# Override the log description by setting the TOFU_LOG_DESCRIPTION environment variable.
+log_description = os.environ.get("TOFU_LOG_DESCRIPTION", "tofu")
 todays_date = datetime.now().strftime("%x").replace("/","-")
 fname_log = os.path.join(LOG_DIR,"tofu_debug--{}_{}.log".format(log_description,todays_date))
 

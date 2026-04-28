@@ -4,6 +4,7 @@ numpy
 pandas>=2.0.3
 plotly
 geopy
+geopandas
 python-dotenv
 rainflow
 scikit-learn
@@ -12,11 +13,10 @@ shapely
 timezonefinder
 setuptools
 pyyaml
-pathlib
 dill
 h5pyd #for getting resource data
 # h5py
 openpyxl
-# mpi4py #for HPC runs
+# mpi4py #for HPC parallel runs only (install separately)
 NREL-rex
 packaging

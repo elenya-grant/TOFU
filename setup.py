@@ -1,13 +1,13 @@
 from pathlib import Path
 from setuptools import setup, find_packages
 
-NAME = "TOFU"
+NAME = "tofu"
 DESCRIPTION = "playground for onsite analysis"
 URL = "https://github.com/elenya-grant/TOFU.git"
 EMAIL = "elenya.grant@nrel.gov"
 AUTHOR = "NREL"
 REQUIRES_PYTHON = ">=3.8.0"
-VERSION = 1.0
+VERSION = "1.0"
 ROOT = Path(__file__).parent
 
 

@@ -15,7 +15,7 @@ def get_unique_gids(gid_df,unq_gid_filename):
 
 def combine_files(folder,filename_list,output_fname):
     res_df = pd.DataFrame()
-    info_a_cols = ["PARCEL_LID","obs_id","SITE_STATE","best_lat","best_lon","usable_wind_sqm","under_1_acre"]
+    info_a_cols = ["PARCEL_LID","obs_id","SITE_STATE","latitude","longitude","usable_wind_sqm","under_1_acre"]
     info_b_cols = ["WTK gid","NSRDB gid","WTK Lat/Lon","NSRDB Lat/Lon"]
     for f in filename_list:
         filename = os.path.join(folder,f)
@@ -71,31 +71,16 @@ if __name__ == "__main__":
     # remove_files(result_folder,result_file_desc,"site_resource")
     # remove_files(result_folder,"solar_site_resource--_","solar_site_resource.p")
     # remove_files(result_folder,"wind_site_resource--_","wind_site_resource.p")
-    
-    # ---- BELOW IS TO COMBINE ----
-    # input_folder = os.path.join(str(INPUT_DIR),os.path.dirname(__file__).split("/")[-1])
-    # input_filename = "run_config.yaml"
-    # input_filepath = os.path.join(input_folder,input_filename)
-    # input_config = load_yaml(input_filepath)
 
-    # result_folder = input_config["gid_run"]["output_folder"]
-    # result_file_desc = "site_gids--_"
-    # result_file_type = ".pkl"
-    # exlude_result_desc = input_config["gid_run"]["final_gid_sitelist"]
-    # # output_filename = input_config["gid_run"]["final_gid_sitelist"]
-    
-    # exlude_result_desc = "site_gid_list.pkl"
-    # output_filename = "site_gid_list.pkl"
-    # unq_gid_filepath = os.path.join(result_folder,input_config["gid_run"]["unique_gid_list"])
-    
-    # files = os.listdir(result_folder)
-    # files = [f for f in files if result_file_type in f]
-    # files = [f for f in files if result_file_desc in f]
-    # files = [f for f in files if exlude_result_desc not in f]
-    # files = [f for f in files if input_config["gid_run"]["unique_gid_list"] not in f]
-    # files = [f for f in files if f!=output_filename]
-    
-    # if len(files)>0:
-    #     res_gid_df = combine_files(result_folder,files,output_filename)
-    #     get_unique_gids(res_gid_df,unq_gid_filepath)
-    #     print("done")
+    # ---- BELOW IS TO COMBINE ----
+    files = os.listdir(result_folder)
+    files = [f for f in files if result_file_type in f]
+    files = [f for f in files if result_file_desc in f]
+    files = [f for f in files if exlude_result_desc not in f]
+    files = [f for f in files if input_config["gid_run"]["unique_gid_list"] not in f]
+    files = [f for f in files if f!=output_filename]
+
+    if len(files)>0:
+        res_gid_df = combine_files(result_folder,files,output_filename)
+        get_unique_gids(res_gid_df,unq_gid_filepath)
+        print("done")
