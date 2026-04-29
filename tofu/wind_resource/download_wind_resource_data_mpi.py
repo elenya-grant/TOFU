@@ -107,8 +107,8 @@ def main(sitelist,input_info,verbose = False):
 
 if __name__=="__main__":
     layout = "3x7"
-    wind_sitelist_fname = f"wind_sites_for_non_original_resource_download_{layout}.pkl"
-    # wind_sitelist_fname = f"wind_sites_for_resource_download_{layout}.pkl"
+    #wind_sitelist_fname = f"wind_sites_for_non_original_resource_download_{layout}.pkl"
+    wind_sitelist_fname = f"wind_sites_for_resource_download_{layout}.pkl"
     wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
     wind_sitelist_fpath = os.path.join(wind_sitelist_dir,wind_sitelist_fname)
     sitelist = pd.read_pickle(wind_sitelist_fpath)

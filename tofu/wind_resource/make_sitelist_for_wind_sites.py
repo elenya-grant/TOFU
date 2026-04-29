@@ -11,12 +11,12 @@ _gid_run_cfg = load_yaml(os.path.join(str(INPUT_DIR), "site_resource_analysis", 
 
 sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
 manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="aggregated_facility_level_site_list_2026_04_23.csv")
-manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==True]
+manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==False]
 manuf_site_ids = manuf_sites["PARCEL_LID"].to_list()
 
 layout = "3x7"
 wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),"wind_siting_analysis")
-wind_sitelist_filename = f"best_turb_nonexclusionsitelist_wind-square-{layout}_spacing.pkl"
+wind_sitelist_filename = f"best_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
 best_turb_per_site = pd.read_pickle(os.path.join(wind_sitelist_dir,wind_sitelist_filename))
 best_turb_per_site = best_turb_per_site[best_turb_per_site["under_1_acre"]==False]
 #best_turb_per_site = best_turb_per_site[best_turb_per_site["wind_exclusion"]==False]
@@ -34,9 +34,18 @@ site_gids = site_gids.dropna(axis=0,how="any",subset=["PARCEL_LID","WTK gid","NS
 gid_unique_cols = [k for k in site_gids.columns.to_list() if k not in manuf_sites.columns.to_list()]
 # site_gid_ids = site_gids["MatchID"].to_list()
 
-t1 = best_turb_per_site.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids][turb_unique_cols]
-t2 = site_gids.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids][gid_unique_cols]
-final_df = pd.concat([manuf_sites.set_index(keys=["PARCEL_LID"]).loc[manuf_site_ids],t1,t2],axis=1)
+common_ids = sorted(
+    set(manuf_site_ids)
+    & set(best_turb_per_site["PARCEL_LID"])
+    & set(site_gids["PARCEL_LID"])
+)
+n_dropped = len(set(manuf_site_ids)) - len(common_ids)
+if n_dropped:
+    print(f"WARNING: {n_dropped} PARCEL_LIDs from manuf_sites not found in turbine or GID data — skipping them.")
+
+t1 = best_turb_per_site.set_index(keys=["PARCEL_LID"]).loc[common_ids][turb_unique_cols]
+t2 = site_gids.set_index(keys=["PARCEL_LID"]).loc[common_ids][gid_unique_cols]
+final_df = pd.concat([manuf_sites.set_index(keys=["PARCEL_LID"]).loc[common_ids],t1,t2],axis=1)
 
 final_df["hub_height"] = None
 for turbine,hub_height in turbine_to_hubht.items():

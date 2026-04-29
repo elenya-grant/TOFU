@@ -28,9 +28,9 @@ make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list = Tru
 # only sites without wind exclusions - airport, DoD, etc.
 # These things below will likely be redundant since an update to the new sitelist is that if the site has any exclusions,
 # then the usable wind area is set to 0, so the filtering above should have already removed these sites. But just in case, we can run this too.
-print("cleaning sitelist for non exclusion sites...")
-clean_filtered_sitelist_files(shape = "square", row_spacings = r_spacings, col_spacings = c_spacings, make_summary = True,use_all_sites=False)
-print("making sorted sitelist")
-make_sorted_sitelist(output_dir,make_sorted_list = True,clean_sorted_list = False,row_spacings = r_spacings,col_spacings = c_spacings,shape = "square",use_full_sitelist=False)
-print("cleaning sorted sitelist")
-make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list = True,row_spacings = r_spacings,col_spacings = c_spacings,shape = "square",use_full_sitelist=False)
+# print("cleaning sitelist for non exclusion sites...")
+# clean_filtered_sitelist_files(shape = "square", row_spacings = r_spacings, col_spacings = c_spacings, make_summary = True,use_all_sites=False)
+# print("making sorted sitelist")
+# make_sorted_sitelist(output_dir,make_sorted_list = True,clean_sorted_list = False,row_spacings = r_spacings,col_spacings = c_spacings,shape = "square",use_full_sitelist=False)
+# print("cleaning sorted sitelist")
+# make_sorted_sitelist(output_dir,make_sorted_list = False,clean_sorted_list = True,row_spacings = r_spacings,col_spacings = c_spacings,shape = "square",use_full_sitelist=False)

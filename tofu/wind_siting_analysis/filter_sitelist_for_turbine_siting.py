@@ -68,7 +68,7 @@ def filter_sitelist_for_wind_turbines(layout_str:str,sitelist_data_filename = "a
         rotor_diameter = turb_config[turb]["rotor_diameter"]
         
         df["{}: maximum # turbines".format(turb)] = 0
-        df["{}: max wind farm capacity [kW]".format(turb)] = 0
+        df["{}: max wind farm capacity [kW]".format(turb)] = 0.0
         df.loc[i_usable_sites,"{}: maximum # turbines".format(turb)] = 1
         df.loc[i_usable_sites,"{}: max wind farm capacity [kW]".format(turb)] = 1*turb_config[turb]["rated_power_kW"]
 
