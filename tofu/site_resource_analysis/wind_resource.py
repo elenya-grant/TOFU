@@ -120,6 +120,7 @@ class WindResource:
             if self.site_gid is None:
                 site_gid = f.lat_lon_gid((self.latitude, self.longitude))
                 self.site_gid = site_gid
+            self.site_gid = int(self.site_gid)
             time_zone = f.meta['timezone'].iloc[self.site_gid]
             self.wtk_latitude = f.meta['latitude'].iloc[self.site_gid]
             self.wtk_longitude = f.meta['longitude'].iloc[self.site_gid]

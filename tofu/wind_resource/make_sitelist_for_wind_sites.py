@@ -52,6 +52,13 @@ for turbine,hub_height in turbine_to_hubht.items():
     ii = final_df[final_df["best turbine"]==turbine].index.to_list()
     final_df.loc[ii,"hub_height"] = hub_height
 
+n_before = len(final_df)
+final_df = final_df.dropna(subset=["hub_height"])
+n_dropped_hh = n_before - len(final_df)
+if n_dropped_hh:
+    print(f"WARNING: Dropped {n_dropped_hh} sites with hub_height=None.")
+final_df["hub_height"] = final_df["hub_height"].astype(int)
+final_df["WTK gid"] = final_df["WTK gid"].astype(int)
 final_df = final_df.drop_duplicates()
 final_data_fname = f"wind_sites_for_resource_download_{layout}.pkl"
 final_data_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
