@@ -40,11 +40,11 @@ echo "============================================================"
 #   - Cleans and ranks sitelists
 #   - Output: TOFU/results/wind_siting_analysis/
 # ============================================================
-echo ""
-echo ">>> Phase 1: Wind Siting Analysis"
-echo "    Started: $(date)"
-$PYTHON "${TOFU_DIR}/tofu/wind_siting_analysis/run_wind_siting.py"
-echo "    Completed: $(date)"
+# echo ""
+# echo ">>> Phase 1: Wind Siting Analysis"
+# echo "    Started: $(date)"
+# $PYTHON "${TOFU_DIR}/tofu/wind_siting_analysis/run_wind_siting.py"
+# echo "    Completed: $(date)"
 
 # ============================================================
 # Phase 2: Extract Site Resource GIDs (MPI parallel)
@@ -54,7 +54,7 @@ echo "    Completed: $(date)"
 echo ""
 echo ">>> Phase 2: Extract Site Resource GIDs (${NTASKS} ranks)"
 echo "    Started: $(date)"
-srun -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+srun --mem=0 -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
     $PYTHON "${TOFU_DIR}/tofu/site_resource_analysis/run_site_gids_mpi.py"
 echo "    Completed: $(date)"
 
@@ -73,7 +73,7 @@ echo "    Completed: $(date)"
 echo ""
 echo ">>> Phase 3: Extract Wind Resource Summaries (${NTASKS} ranks)"
 echo "    Started: $(date)"
-srun -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+srun --mem=0 -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
     $PYTHON "${TOFU_DIR}/tofu/site_resource_analysis/run_site_resource_mpi.py"
 echo "    Completed: $(date)"
 
@@ -104,7 +104,7 @@ echo "    Completed: $(date)"
 echo ""
 echo ">>> Phase 4: Download Hourly Wind Resource Data (${NTASKS} ranks)"
 echo "    Started: $(date)"
-srun -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+srun --mem=0 -N ${SLURM_NNODES} --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
     $PYTHON "${TOFU_DIR}/tofu/wind_resource/download_wind_resource_data_mpi.py"
 echo "    Completed: $(date)"
 

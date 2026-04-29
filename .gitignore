@@ -10,3 +10,6 @@ tofu/wind_resource/__pycache__/
 # Ignore the csv and xlsx file in the data folder
 data/*.csv
 data/*.xlsx
+
+# Ignore the output files in results folder
+results/
