@@ -120,7 +120,7 @@ if __name__=="__main__":
         "resource_year":2012,
         "lat_string":"latitude",
         "lon_string":"longitude",
-        "hub_ht_str": "hub_height",
+        "hub_ht_str": ["hub_height_24", "hub_height_37", "hub_height_60", "hub_height_80", "hub_height_115"],
         }
     main(sitelist,input_dict)
     

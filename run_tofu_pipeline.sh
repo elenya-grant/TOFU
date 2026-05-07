@@ -40,11 +40,11 @@ echo "============================================================"
 #   - Cleans and ranks sitelists
 #   - Output: TOFU/results/wind_siting_analysis/
 # ============================================================
-# echo ""
-# echo ">>> Phase 1: Wind Siting Analysis"
-# echo "    Started: $(date)"
-# $PYTHON "${TOFU_DIR}/tofu/wind_siting_analysis/run_wind_siting.py"
-# echo "    Completed: $(date)"
+echo ""
+echo ">>> Phase 1: Wind Siting Analysis"
+echo "    Started: $(date)"
+$PYTHON "${TOFU_DIR}/tofu/wind_siting_analysis/run_wind_siting.py"
+echo "    Completed: $(date)"
 
 # ============================================================
 # Phase 2: Extract Site Resource GIDs (MPI parallel)

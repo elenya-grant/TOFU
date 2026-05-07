@@ -14,7 +14,7 @@ manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename
 manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==False]
 manuf_site_ids = manuf_sites["PARCEL_LID"].to_list()
 
-layout = "3x7"
+layout = "5x5"
 wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),"wind_siting_analysis")
 wind_sitelist_filename = f"best_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
 best_turb_per_site = pd.read_pickle(os.path.join(wind_sitelist_dir,wind_sitelist_filename))
@@ -59,6 +59,12 @@ if n_dropped_hh:
     print(f"WARNING: Dropped {n_dropped_hh} sites with hub_height=None.")
 final_df["hub_height"] = final_df["hub_height"].astype(int)
 final_df["WTK gid"] = final_df["WTK gid"].astype(int)
+
+# Add a column per turbine hub height so Phase 4 can download all 5
+for turbine_name, hh in turbine_to_hubht.items():
+    col_name = f"hub_height_{int(hh)}"
+    final_df[col_name] = int(hh)
+
 final_df = final_df.drop_duplicates()
 final_data_fname = f"wind_sites_for_resource_download_{layout}.pkl"
 final_data_dir = os.path.join(str(OUTPUT_DIR),os.path.dirname(__file__).split("/")[-1])
@@ -66,3 +72,36 @@ check_create_folder(final_data_dir)
 final_data_fpath = os.path.join(final_data_dir,final_data_fname)
 final_df.to_pickle(final_data_fpath)
 final_df.to_csv(final_data_fpath.replace(".pkl",".csv"))
+
+# --- Phase B: Create wind_site_list_3x7_spacing.csv ---
+# Read the sorted turbine sitelist (ranked turbine_0 through turbine_4)
+sorted_sitelist_fname = f"sorted_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
+sorted_sitelist_fpath = os.path.join(wind_sitelist_dir, sorted_sitelist_fname)
+sorted_df = pd.read_pickle(sorted_sitelist_fpath)
+sorted_df = sorted_df[sorted_df["under_1_acre"] == False]
+sorted_df = sorted_df.dropna(axis=0, how="any", subset=["PARCEL_LID", "latitude", "longitude"])
+
+# Columns unique to the sorted sitelist (turbine rankings)
+sorted_unique_cols = [k for k in sorted_df.columns.to_list() if k not in manuf_sites.columns.to_list()]
+
+# Intersect with manuf_sites and site_gids
+sorted_common_ids = sorted(
+    set(manuf_site_ids)
+    & set(sorted_df["PARCEL_LID"])
+    & set(site_gids["PARCEL_LID"])
+)
+
+s1 = sorted_df.set_index(keys=["PARCEL_LID"]).loc[sorted_common_ids][sorted_unique_cols]
+s2 = site_gids.set_index(keys=["PARCEL_LID"]).loc[sorted_common_ids][gid_unique_cols]
+wind_site_list_df = pd.concat(
+    [manuf_sites.set_index(keys=["PARCEL_LID"]).loc[sorted_common_ids], s1, s2],
+    axis=1,
+)
+wind_site_list_df["WTK gid"] = wind_site_list_df["WTK gid"].astype(int)
+wind_site_list_df = wind_site_list_df.drop_duplicates()
+
+wind_site_list_fname = f"wind_site_list_{layout}_spacing.csv"
+wind_site_list_fpath = os.path.join(final_data_dir, wind_site_list_fname)
+wind_site_list_df.to_csv(wind_site_list_fpath)
+wind_site_list_df.to_pickle(wind_site_list_fpath.replace(".csv", ".pkl"))
+print(f"Saved wind_site_list to {wind_site_list_fpath} ({len(wind_site_list_df)} sites)")
