@@ -175,6 +175,15 @@ class WindResource:
                                                        self.wind_dict['pressure_{h}m_arr'.format(h=self.data_hub_heights[0])],
                                                        self.wind_dict['windspeed_{h}m_arr'.format(h=self.data_hub_heights[0])],
                                                        self.wind_dict['winddirection_{h}m_arr'.format(h=self.data_hub_heights[0])])]
+
+        # Cast all inner values from numpy scalars to native Python floats.
+        # zip() over numpy arrays yields numpy scalar objects (e.g. np.float32),
+        # which pickle via __reduce__ -> GLOBAL/REDUCE opcodes that Julia's
+        # Pickle.jl cannot reconstruct. Converting to native float() emits plain
+        # BINFLOAT opcodes, making the resulting pickle readable by Pickle.jl
+        # (and is required in addition to writing at protocol <=4).
+        self.combined_data = [[float(x) for x in row] for row in self.combined_data]
+
     def summarize_annual_resource(self,return_site_lat_lon = True):
         if return_site_lat_lon:
             keys = ["site latitude","site longitude","resource year"]
