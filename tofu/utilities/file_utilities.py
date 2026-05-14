@@ -114,9 +114,19 @@ def find_data_shapefile(files):
         data_file = [file for file in files if file.split(".")[-1]=="csv"]
     return data_file[0]
 
-def dump_pickle(filename,data):
-    with open(filename,"wb") as f:
-        dill.dump(data,f)
+def dump_pickle(filename, data, protocol=4):
+    """Dump `data` to `filename` via dill.
+
+    Defaults to pickle protocol 4 (rather than dill's default of
+    `pickle.DEFAULT_PROTOCOL`, which is 5 on Python >= 3.8) because some
+    downstream consumers — notably Julia's `Pickle.jl` used in
+    `onsite-energy-analysis/code/wind_tech_potential/wind_functions.jl` —
+    cannot read protocol 5 files. Protocol 4 is supported on all Python >=3.4
+    and preserves all features needed by TOFU's pickled payloads
+    (dicts/lists/floats/ints, pandas DataFrames).
+    """
+    with open(filename, "wb") as f:
+        dill.dump(data, f, protocol=protocol)
 
 def load_pickle(filename):
     with open(filename,"rb") as f:
