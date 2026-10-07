@@ -16,8 +16,14 @@ module purge
 # ============================================================
 # Environment setup
 # ============================================================
-module load wrf/4.2.2-cray
+#module load gcc/12.2.0
+module load PrgEnv-gnu
 module load cray-mpich/8.1.28
+#module load cray-hdf5/1.12.2.1
+#module load cray-netcdf/4.9.0.1
+#module load wrf/4.2.2-cray
+# Added the echo below and commented out the 3 lines above
+echo "$CRAY_MPICH_DIR" 
 module load conda
 conda activate /home/dbernal/.conda-envs/tofu
 export LD_LIBRARY_PATH=/opt/cray/libfabric/1.15.2.0/lib64:$CRAY_MPICH_DIR/lib:$LD_LIBRARY_PATH
