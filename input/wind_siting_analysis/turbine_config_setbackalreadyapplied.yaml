@@ -1,0 +1,40 @@
+# Setbacks are already baked into the per-turbine-class usable area file, so hub_height and
+# rotor_diameter are zeroed here to make calc_setback_distance return 0 (no second setback).
+# This config is used ONLY for the setback calculation; turbine_config.yaml still drives
+# spacing and rated power. Keep turbine keys identical to turbine_config.yaml.
+Bergey Excel 15:
+  class: residential
+  rotor_diameter: 0 #m
+  hub_height: 0 #m
+  rated_power_kW: 15.6
+  class_suffix: bergey_24hh_10rd
+  power_curve_filename: "BergeyExcel15_15.6kW_9.6.csv"
+Northern Power Systems 100:
+  class: commercial
+  rotor_diameter: 0
+  hub_height: 0
+  rated_power_kW: 100
+  class_suffix: npower_37hh_21rd
+  power_curve_filename: "NPS100C-21_100kW_20.7.csv"
+Vestas V-47:
+  class: midsize
+  rotor_diameter: 0
+  hub_height: 0
+  rated_power_kW: 660
+  class_suffix: vestas_60hh_47rd
+  power_curve_filename: "VestasV47_660kW_47.csv"
+GE 1.5 MW:
+  class: large
+  rotor_diameter: 0
+  hub_height: 0
+  rated_power_kW: 1500
+  class_suffix: ge_80hh_77rd
+  power_curve_filename: "DOE_GE_1.5MW_77.csv"
+Bespoke 6 MW 170:
+  class: utility
+  rotor_diameter: 0
+  hub_height: 0
+  rated_power_kW: 6000
+  class_suffix: bespoke_115hh_170rd
+  power_curve_filename: "2023NREL_Bespoke_6MW_170.csv"
+  avg_windspeed_110m: [7.36,9.52]

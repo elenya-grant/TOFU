@@ -5,6 +5,7 @@ Bergey Excel 15:
   rotor_diameter: 9.6 #m
   hub_height: 24 #m
   rated_power_kW: 15.6
+  class_suffix: bergey_24hh_10rd # wind_usable_sqm_<class_suffix> column in the per-turbine-class usable area file
   power_curve_filename: "BergeyExcel15_15.6kW_9.6.csv"
   # https://www.bergey.com/products/grid-tied-turbines/excel-15/
   # -> needs 2 acres of land
@@ -14,6 +15,7 @@ Northern Power Systems 100:
   rotor_diameter: 20.7 #21, 24 or 28m options
   hub_height: 37 #40
   rated_power_kW: 100
+  class_suffix: npower_37hh_21rd
   power_curve_filename: "NPS100C-21_100kW_20.7.csv"
   #https://www.nps100.com/wp/nps-100c/
   # NPS100C-24 for medium wind
@@ -24,12 +26,14 @@ Vestas V-47:
   rotor_diameter: 47
   hub_height: 60 #45-65
   rated_power_kW: 660
+  class_suffix: vestas_60hh_47rd
   power_curve_filename: "VestasV47_660kW_47.csv"
 GE 1.5 MW:
   class: large
   rotor_diameter: 77 #107
   hub_height: 80 #61.4,64.7,80,85.100m
   rated_power_kW: 1500
+  class_suffix: ge_80hh_77rd
   power_curve_filename: "DOE_GE_1.5MW_77.csv"
   #https://en.wind-turbine-models.com/turbines/20-ge-vernova-ge-1.5sl
 Bespoke 6 MW 170:
@@ -37,6 +41,7 @@ Bespoke 6 MW 170:
   rotor_diameter: 170
   hub_height: 115
   rated_power_kW: 6000
+  class_suffix: bespoke_115hh_170rd
   power_curve_filename: "2023NREL_Bespoke_6MW_170.csv"
   avg_windspeed_110m: [7.36,9.52]
 # Bespoke 6 MW 196:
