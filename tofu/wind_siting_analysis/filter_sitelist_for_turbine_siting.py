@@ -56,7 +56,8 @@ def filter_sitelist_for_wind_turbines(layout_str:str,wind_area_data_filename = "
     df = pd.read_csv(wind_area_filepath,usecols=columns)
     df = df.rename(columns={"parcel_centroid_latitude": "latitude", "parcel_centroid_longitude": "longitude", "flag_below_1ac": "under_1_acre"})
 
-    df = df[~df["flag_area_outlier"].astype(bool)]
+    # NOTE: Retain the two sites in AK
+    #df = df[~df["flag_area_outlier"].astype(bool)]
     if conus_only:
         df = df[df["wind_usable_source"] == "rev_wind_10_6_26"]
     # drop parcels with no usable area for any turbine class

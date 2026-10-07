@@ -14,7 +14,7 @@ manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename
 manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==False]
 manuf_site_ids = manuf_sites["PARCEL_LID"].to_list()
 
-layout = "5x5"
+layout = "3x7"
 wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),"wind_siting_analysis")
 wind_sitelist_filename = f"best_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
 best_turb_per_site = pd.read_pickle(os.path.join(wind_sitelist_dir,wind_sitelist_filename))
