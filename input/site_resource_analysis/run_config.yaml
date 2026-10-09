@@ -3,8 +3,8 @@ gid_run:
   final_gid_sitelist: "site_gid_list.pkl"
   unique_gid_list: "unique_gid_list.pkl"
 sitelist:
-  directory: "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
-  filename: "aggregated_facility_level_site_list_2026_04_23.csv"
+  directory: "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_10_7_2026"
+  filename: "wind_usable_area_by_turbine_class_parcel_10_6_26.csv"
 resource_runs:
   unique_gid_filename:
 resource_data:

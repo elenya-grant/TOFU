@@ -19,7 +19,7 @@ def _validate_data_folder(data_folder):
             f"data_folder override '{data_folder}' must resolve under '{_ALLOWED_DATA_ROOT}'"
         )
 
-def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026",sitelist_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv"):
+def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_10_7_2026",sitelist_data_filename = "wind_usable_area_by_turbine_class_parcel_10_6_26.csv"):
     non_conus = ['HI','VI','MP','GU','AK','AS','PR']
 
     _validate_data_folder(data_folder)
@@ -27,13 +27,13 @@ def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analy
         sitelist_filepath = os.path.join(str(DATA_DIR),sitelist_data_filename)
     else:
         sitelist_filepath = os.path.join(data_folder,sitelist_data_filename)
-    columns = ["PARCEL_LID","obs_id","SITE_STATE","best_lat","best_lon","usable_wind_sqm","under_1_acre"]
+    columns = ["PARCEL_LID","obs_id","SITE_STATE","parcel_centroid_latitude","parcel_centroid_longitude","parcel_area_m2","flag_below_1ac"]
     df  = pd.read_csv(sitelist_filepath,usecols=columns,encoding = "ISO-8859-1")
 
     for n in non_conus:
         df = df[df["SITE_STATE"] != n]
-    df = df.dropna(axis=0,how='any',subset=["best_lat","best_lon","obs_id"])
-    df = df.rename(columns={"best_lat": "latitude", "best_lon": "longitude"})
+    df = df.dropna(axis=0,how='any',subset=["parcel_centroid_latitude","parcel_centroid_longitude","obs_id"])
+    df = df.rename(columns={"parcel_centroid_latitude": "latitude", "parcel_centroid_longitude": "longitude"})
     # lat_min, lon_min, lat_max, lon_max
     return df
 

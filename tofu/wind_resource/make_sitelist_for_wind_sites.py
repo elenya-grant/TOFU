@@ -9,16 +9,16 @@ from tofu.site_resource_analysis.filter_sitelist_for_conus import  get_conus_sit
 # `process_site_gids_results.py` writes to.
 _gid_run_cfg = load_yaml(os.path.join(str(INPUT_DIR), "site_resource_analysis", "run_config.yaml"))["gid_run"]
 
-sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_4_10_2026"
-manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="aggregated_facility_level_site_list_2026_04_23.csv")
-manuf_sites = manuf_sites[manuf_sites["under_1_acre"]==False]
+sitelist_dir = "/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_10_7_2026"
+manuf_sites = get_conus_sitelist(data_folder=sitelist_dir,sitelist_data_filename="wind_usable_area_by_turbine_class_parcel_10_6_26.csv")
+manuf_sites = manuf_sites[manuf_sites["flag_below_1ac"]==False]
 manuf_site_ids = manuf_sites["PARCEL_LID"].to_list()
 
 layout = "3x7"
 wind_sitelist_dir = os.path.join(str(OUTPUT_DIR),"wind_siting_analysis")
 wind_sitelist_filename = f"best_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
 best_turb_per_site = pd.read_pickle(os.path.join(wind_sitelist_dir,wind_sitelist_filename))
-best_turb_per_site = best_turb_per_site[best_turb_per_site["under_1_acre"]==False]
+best_turb_per_site = best_turb_per_site[best_turb_per_site["flag_below_1ac"]==False]
 #best_turb_per_site = best_turb_per_site[best_turb_per_site["wind_exclusion"]==False]
 best_turb_per_site = best_turb_per_site.dropna(axis=0,how="any",subset=["PARCEL_LID","latitude","longitude"])
 turb_unique_cols = [k for k in best_turb_per_site.columns.to_list() if k not in manuf_sites.columns.to_list()]
