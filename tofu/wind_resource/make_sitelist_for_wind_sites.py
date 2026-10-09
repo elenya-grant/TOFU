@@ -78,7 +78,7 @@ final_df.to_csv(final_data_fpath.replace(".pkl",".csv"))
 sorted_sitelist_fname = f"sorted_turb_fullsitelist_wind-square-{layout}_spacing.pkl"
 sorted_sitelist_fpath = os.path.join(wind_sitelist_dir, sorted_sitelist_fname)
 sorted_df = pd.read_pickle(sorted_sitelist_fpath)
-sorted_df = sorted_df[sorted_df["under_1_acre"] == False]
+sorted_df = sorted_df[sorted_df["flag_below_1ac"] == False]
 sorted_df = sorted_df.dropna(axis=0, how="any", subset=["PARCEL_LID", "latitude", "longitude"])
 
 # Columns unique to the sorted sitelist (turbine rankings)

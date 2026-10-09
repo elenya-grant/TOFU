@@ -23,14 +23,14 @@ def _validate_data_folder(data_folder):
 # Wind usable area is now supplied per turbine class with reV setbacks already applied, so the
 # setback is NOT re-applied here (that would double-count it). The setback calculation uses a
 # zeroed turbine config while the real turbine_config.yaml still drives spacing and rated power.
-def filter_sitelist_for_wind_turbines(layout_str:str,wind_area_data_filename = "wind_usable_area_by_turbine_class_parcel_10_6_26.csv",obs_id_data_filename = "aggregated_facility_level_site_list_2026_04_23.csv",data_folder=None,conus_only=False):
+def filter_sitelist_for_wind_turbines(layout_str:str,wind_area_data_filename = "wind_usable_area_by_turbine_class_parcel_10_6_26.csv",data_folder="/projects/iedo00onsite/onsite-energy-analysis/data/pnnl_parcel_land_coverage_data/updated_10_7_2026",conus_only=False):
     """_summary_
 
     Args:
         layout_str (str): either "5x5" or "3x7" or a new string if a new layout_config file is made
-        wind_area_data_filename (str): per-turbine-class wind usable area CSV (one row per PARCEL_LID)
-        obs_id_data_filename (str): facility-level CSV used to attach the list of obs_id per parcel
-        data_folder (str or None): directory containing both CSVs. If None, uses TOFU DATA_DIR.
+        wind_area_data_filename (str): per-turbine-class wind usable area CSV (one row per PARCEL_LID),
+            already augmented with obs_id by tofu.utilities.augment_sitelist_with_obs_id
+        data_folder (str or None): directory containing the CSV. If None, uses TOFU DATA_DIR.
         conus_only (bool): keep only CONUS parcels directly extracted from the reV composite
     """
     input_config_dir = os.path.join(str(INPUT_DIR),os.path.dirname(__file__).split("/")[-1])
@@ -46,15 +46,14 @@ def filter_sitelist_for_wind_turbines(layout_str:str,wind_area_data_filename = "
     _validate_data_folder(data_folder)
     base_folder = str(DATA_DIR) if data_folder is None else data_folder
     wind_area_filepath = os.path.join(base_folder,wind_area_data_filename)
-    obs_id_filepath = os.path.join(base_folder,obs_id_data_filename)
 
     # per-class usable area column name for each turbine, e.g. wind_usable_sqm_ge_80hh_77rd
     area_col = {turb: "wind_usable_sqm_{}".format(turb_config[turb]["class_suffix"]) for turb in turb_config.keys()}
 
-    base_cols = ["PARCEL_LID","SITE_STATE","parcel_centroid_latitude","parcel_centroid_longitude","flag_below_1ac","flag_area_outlier","wind_usable_source"]
+    base_cols = ["PARCEL_LID","obs_id","SITE_STATE","parcel_centroid_latitude","parcel_centroid_longitude","flag_below_1ac","flag_area_outlier","usable_wind_sqm", "wind_usable_source"]
     columns = base_cols + list(area_col.values())
     df = pd.read_csv(wind_area_filepath,usecols=columns)
-    df = df.rename(columns={"parcel_centroid_latitude": "latitude", "parcel_centroid_longitude": "longitude", "flag_below_1ac": "under_1_acre"})
+    df = df.rename(columns={"parcel_centroid_latitude": "latitude", "parcel_centroid_longitude": "longitude"})
 
     # NOTE: Retain the two sites in AK
     #df = df[~df["flag_area_outlier"].astype(bool)]
@@ -62,11 +61,6 @@ def filter_sitelist_for_wind_turbines(layout_str:str,wind_area_data_filename = "
         df = df[df["wind_usable_source"] == "rev_wind_10_6_26"]
     # drop parcels with no usable area for any turbine class
     df = df[df[list(area_col.values())].max(axis=1) > 0]
-
-    # attach the list of all obs_id sharing each parcel (parcel may hold multiple facilities)
-    obs_df = pd.read_csv(obs_id_filepath,usecols=["PARCEL_LID","obs_id"],encoding="ISO-8859-1")
-    obs_by_parcel = obs_df.dropna(subset=["obs_id"]).groupby("PARCEL_LID")["obs_id"].apply(list)
-    df["obs_id"] = df["PARCEL_LID"].map(obs_by_parcel)
 
     df = df.reset_index(drop=True)
 

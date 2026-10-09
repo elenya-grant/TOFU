@@ -32,7 +32,7 @@ def get_conus_sitelist(data_folder = "/projects/iedo00onsite/onsite-energy-analy
 
     for n in non_conus:
         df = df[df["SITE_STATE"] != n]
-    df = df.dropna(axis=0,how='any',subset=["parcel_centroid_latitude","parcel_centroid_longitude","obs_id"])
+    df = df.dropna(axis=0,how='any',subset=["parcel_centroid_latitude","parcel_centroid_longitude"])
     df = df.rename(columns={"parcel_centroid_latitude": "latitude", "parcel_centroid_longitude": "longitude"})
     # lat_min, lon_min, lat_max, lon_max
     return df

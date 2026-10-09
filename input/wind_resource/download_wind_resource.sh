@@ -8,6 +8,7 @@
 #SBATCH --account=iedo00onsite
 #SBATCH --mail-user dbernal@nlr.gov
 #SBATCH --mail-type BEGIN,END,FAIL
+module purge
 module load conda
 conda activate /home/dbernal/.conda-envs/tofu
 module load cray-mpich
